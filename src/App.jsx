@@ -1,121 +1,21 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, OrbitControls, useAnimations } from '@react-three/drei';
-import {
-  EffectComposer,
-  DepthOfField,
-  Bloom,
-  Vignette,
-  ChromaticAberration,
-  Noise,
-} from '@react-three/postprocessing';
-import { KernelSize, BlendFunction } from 'postprocessing';
-import { proxy, useSnapshot } from 'valtio';
-import useMeasure from 'react-use-measure';
-import { useState, useEffect, useRef, useMemo } from 'react';
-const modes = ['translate', 'rotate', 'scale'];
-const state = proxy({ current: null, mode: 0 });
+import React, { useEffect, useRef, useState } from 'react';
+import Canvas3D from './Components/Canvas3D';
+import Content from './Components/Content';
 
-function Controls() {
-  useFrame(({ camera }) => {
-    camera.rotation.order = 'XYZ';
-    return null;
-  });
-
-  // Get notified on changes to state
-  const snap = useSnapshot(state);
-  const scene = useThree((state) => state.scene);
-  return (
-    <>
-      {snap.current && (
-        <TransformControls
-          object={scene.getObjectByName(snap.current)}
-          mode={modes[snap.mode]}
-        />
-      )}
-      <OrbitControls rotateSpeed={0.2} />
-      {/* <FirstPersonControls lookSpeed={0.05}/> */}
-    </>
-  );
-}
-
-function Me({ instances, ...props }) {
-  const group = useRef();
-  const { nodes, materials, animations } = useGLTF('/me-transformed.glb');
-
-  const { actions } = useAnimations(animations, group);
-
-  console.log(actions);
-
+function App() {
+  const [main, setMain] = useState();
+  const ref = useRef();
   useEffect(() => {
-    console.log(actions.TShirtAction);
-  });
-
+    setMain(ref.current.children[1]);
+  }, [main]);
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="Frame"
-          geometry={nodes.Frame.geometry}
-          material={materials['Material.003']}
-        />
-        <mesh
-          name="Glass"
-          geometry={nodes.Glass.geometry}
-          material={materials['Material.004']}
-        />
-        <mesh
-          name="Band"
-          geometry={nodes.Band.geometry}
-          material={materials['Material.001']}
-        />
-        <mesh
-          name="TShirt"
-          geometry={nodes.TShirt.geometry}
-          material={materials['Material.002']}
-        />
-      </group>
-    </group>
+    <main ref={ref}>
+      <div className="canvas3D">
+        <Canvas3D mainRef={main} />
+      </div>
+      <Content />
+    </main>
   );
 }
 
-export default function App() {
-  return (
-    <Canvas
-      camera={{ fov: 8, near: 0.01, far: 4000 }}
-      gl={{ alpha: false }}
-      shadows
-    >
-      <ambientLight intensity={0.1} color={'#DAD9D0'} />
-      <spotLight intensity={0.9} position={(0, 1, 1)} color={'#DAD9D0'} />
-      <Me />
-
-      <color attach="background" args={['#DAD9D0']} />
-
-      <Controls />
-
-      <EffectComposer>
-        <Bloom
-          kernelSize={3}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0}
-          intensity={4}
-          opacity={0.05}
-        />
-
-        <Noise premultiply blendFunction={BlendFunction.SCREEN} opacity={0.8} />
-
-        <Vignette
-          offset={0.5}
-          darkness={0.3}
-          eskil={false}
-          blendFunction={BlendFunction.NORMAL}
-        />
-
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={[0.0004, 0.0004]}
-        />
-      </EffectComposer>
-    </Canvas>
-  );
-}
+export default App;
