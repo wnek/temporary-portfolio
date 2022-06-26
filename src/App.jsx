@@ -85,11 +85,11 @@ export default function App() {
       gl={{ alpha: false }}
       shadows
     >
-      <ambientLight intensity={0.1} color={'#ffffff'} />
-      <spotLight intensity={0.7} position={(0, 1, 1)} />
+      <ambientLight intensity={0.1} color={'#DAD9D0'} />
+      <spotLight intensity={0.9} position={(0, 1, 1)} color={'#DAD9D0'} />
       <Me />
 
-      <color attach="background" args={['#ffffff']} />
+      <color attach="background" args={['#DAD9D0']} />
 
       <Controls />
 
@@ -99,16 +99,21 @@ export default function App() {
           luminanceThreshold={0.2}
           luminanceSmoothing={0}
           intensity={4}
-          opacity={0.01}
+          opacity={0.05}
         />
 
-        <Noise premultiply blendFunction={BlendFunction.SCREEN} opacity={0.5} />
+        <Noise premultiply blendFunction={BlendFunction.SCREEN} opacity={0.8} />
 
         <Vignette
           offset={0.5}
-          darkness={0.1}
+          darkness={0.3}
           eskil={false}
           blendFunction={BlendFunction.NORMAL}
+        />
+
+        <ChromaticAberration
+          blendFunction={BlendFunction.NORMAL}
+          offset={[0.0004, 0.0004]}
         />
       </EffectComposer>
     </Canvas>
