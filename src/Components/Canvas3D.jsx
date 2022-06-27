@@ -145,7 +145,7 @@ function Canvas3D({ mainRef }) {
 
         <Vignette
           offset={0.1}
-          darkness={0.5}
+          darkness={0.2}
           eskil={false}
           blendFunction={BlendFunction.NORMAL}
         />
