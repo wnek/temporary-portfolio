@@ -120,17 +120,17 @@ function Canvas3D({ mainRef }) {
       gl={{ alpha: true }}
       shadows
     >
-      <ambientLight intensity={0.8} color={'#DAD9D0'} />
+      <ambientLight intensity={0.8} color={'#DBD8C7'} />
       <spotLight
         intensity={0.7}
         position={(0, 1, 1)}
         penumbra={0.1}
-        color={'#DAD9D0'}
+        color={'#E4DEBE'}
       />
 
       <Me anim={animable} />
 
-      <color attach="background" args={['#E9E8E2']} />
+      <color attach="background" args={['#DBD8C7']} />
 
       <EffectComposer>
         <Bloom
@@ -145,7 +145,7 @@ function Canvas3D({ mainRef }) {
 
         <Vignette
           offset={0.1}
-          darkness={0.2}
+          darkness={0.4}
           eskil={false}
           blendFunction={BlendFunction.NORMAL}
         />
