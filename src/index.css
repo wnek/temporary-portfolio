@@ -12,7 +12,7 @@ body,
 }
 
 body {
-  background-color: #dad9d0;
+  background-color: #dbd8c7;
   display: flex;
   align-items: center;
   align-content: center;
@@ -196,7 +196,7 @@ h3 {
     width: 100vw;
     padding: 3rem 1.2rem 3rem 1.2rem;
     height: auto;
-    background-color: #dad9d0;
+    background-color: #dbd8c7;
   }
   .clients {
     padding: 5rem 0 0 0;
