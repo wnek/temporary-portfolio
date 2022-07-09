@@ -31,7 +31,7 @@ function Content() {
       <section id="second">
         <div class="wrapper">
           <h3>
-            My name is Mariusz Wnęk, but everybody calls me Mariusz. I'm
+            My name is Mariusz Wnęk, but everybody calls me Mariusz. I'm an
             interactive designer from Kraków, Poland. Currently working to make
             the web more immersive at&nbsp;
             <a href="https://www.theatrejs.com/" targe="_blank">
